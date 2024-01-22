@@ -123,7 +123,7 @@ styled_df1 = df1.style.hide(axis="index").set_table_styles([
 st.markdown(styled_df1.to_html(escape=False), unsafe_allow_html=True)
 
 # Add a horizontal rule with black color
-st.markdown("<hr style='border: 2px solid #FFFEFE;'>", unsafe_allow_html=True)
+st.markdown("<hr style='border: 2px solid #0E1117;'>", unsafe_allow_html=True)
 
 
 data2 = {
