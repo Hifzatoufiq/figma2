@@ -168,7 +168,7 @@ print(html_code)
 print(html_code)
 
     # Manipulate the HTML string to include the width property
-html_code = html_code.replace('<table', '<table style="width:1000px; height:150px; margin-left:50px;"')
+html_code = html_code.replace('<table', '<table style="width:800px; height:150px; margin-left:50px;"')
 
 
 st.markdown(html_code, unsafe_allow_html=True)
