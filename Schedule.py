@@ -195,7 +195,7 @@ styled_df2 = df2.style.hide(axis="index").set_table_styles([
 html_code = styled_df2.to_html(escape=False)
 
     # Manipulate the HTML string to include the width property
-html_code = html_code.replace('<table', '<table style="width:500px; margin-left:190px;"')
+html_code = html_code.replace('<table', '<table style="width:500px; margin-left:200px;"')
 
 st.markdown(html_code, unsafe_allow_html=True)
      
