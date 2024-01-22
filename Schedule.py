@@ -174,7 +174,7 @@ html_code = html_code.replace('<table', '<table style="width:800px; height:150px
 st.markdown(html_code, unsafe_allow_html=True)
 
     # Add a horizontal rule with black color
-st.markdown("<hr style='border: 2px solid #FFFEFE;'>", unsafe_allow_html=True)
+st.markdown("<hr style='border: 2px solid #0E1117;'>", unsafe_allow_html=True)
 
 data2 = {
         'Order Id ': ['1', '1', '1'],
