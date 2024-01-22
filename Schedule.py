@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 import os
-from streamlit_extras.app_logo import add_logo
+
 
 
 
