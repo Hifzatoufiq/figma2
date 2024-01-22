@@ -168,7 +168,7 @@ print(html_code)
 print(html_code)
 
     # Manipulate the HTML string to include the width property
-html_code = html_code.replace('<table', '<table style="width:900px; height:150px; "')
+html_code = html_code.replace('<table', '<table style="width:1000px; height:150px; "')
 
 
 st.markdown(html_code, unsafe_allow_html=True)
@@ -195,7 +195,7 @@ styled_df2 = df2.style.hide(axis="index").set_table_styles([
 html_code = styled_df2.to_html(escape=False)
 
     # Manipulate the HTML string to include the width property
-html_code = html_code.replace('<table', '<table style="width:700px; margin-left:150px;"')
+html_code = html_code.replace('<table', '<table style="width:700px; margin-left:110px;"')
 
 st.markdown(html_code, unsafe_allow_html=True)
      
