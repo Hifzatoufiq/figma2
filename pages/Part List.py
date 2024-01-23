@@ -109,10 +109,10 @@ def associate_part_components(master_name, part_name, quantity):
 # Name input field
 part_name = st.text_input("Name: Enter the name of the Master Component", key="master_name")
 # Quantity input field
-quantity = st.number_input("2. Quantity: Specify the quantity if applicable", min_value=0)
+quantity = st.number_input("Quantity: Specify the quantity if applicable", min_value=0)
 
 # Dropdown to select Master Component
-selected_master = st.selectbox("3. Select Master Component (father)", ["Select a Master Component"] + [master["name"] for master in master_components])
+selected_master = st.selectbox("Select Master Component (father)", ["Select a Master Component"] + [master["name"] for master in master_components])
 
 # Button to submit the form
 if st.button("Create Part Component"):
