@@ -107,8 +107,7 @@ def associate_part_components(master_name, part_name, quantity):
             master_component["part_components"].append({"name": part_name, "quantity": quantity})
 
 # Name input field
-part_name = st.text_input("1. Name: Enter the name of the Part Component")
-
+part_name = st.text_input("Name: Enter the name of the Master Component", key="master_name")
 # Quantity input field
 quantity = st.number_input("2. Quantity: Specify the quantity if applicable", min_value=0)
 
