@@ -80,69 +80,64 @@ st.markdown(
         unsafe_allow_html=True,
     )
 # Use HTML and CSS to style the subheader with a blue color
-import streamlit as st
-
-# Use HTML and CSS to style the subheader with a blue color
-st.markdown(
-    """<style>
-       .css-1vfy71t {
-           color: blue;
-       }
-    </style>""",
-    unsafe_allow_html=True
-)
-
-# Display the subheader with the styled color
 def main():
     # Display a subheader with blue text color
-    st.markdown("<h3 style='color:#6498C1;'>Parts List</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#6498C1;'>Part List</h3>", unsafe_allow_html=True)
 
     # The rest of your Streamlit app goes here
 
 if __name__ == "__main__":
     main()
 
+import streamlit as st
 
-# First DataFrame
-data1 = {
-    'Father Component': [
-        '<a href="" style="color: Black; text-decoration: none;">PICKUP FRAME</a>',
-        '<a href="" style="color: Black; text-decoration: none;">V6 TAIL GATE</a>',
-        '<a href="" style="color: Black; text-decoration: none;">HD TAIL GATE</a>'
-    ]
-}
+# Sample data structure to store Master and Part Components
+master_components = []
+
+# Function to create Master Component
+def create_master_component(name):
+    # Logic to save the Master Component with the entered information
+    master_components.append({"name": name, "part_components": []})
+
+# Function to associate Part Components with a Master Component
+def associate_part_components(master_name, part_name, quantity):
+    # Logic to associate Part Components with the selected Master Component
+    for master_component in master_components:
+        if master_component["name"] == master_name:
+            master_component["part_components"].append({"name": part_name, "quantity": quantity})
+
+# Name input field
+part_name = st.text_input("1. Name: Enter the name of the Part Component")
+
+# Quantity input field
+quantity = st.number_input("2. Quantity: Specify the quantity if applicable", min_value=0)
+
+# Dropdown to select Master Component
+selected_master = st.selectbox("3. Select Master Component (father)", ["Select a Master Component"] + [master["name"] for master in master_components])
+
+# Button to submit the form
+if st.button("Create Part Component"):
+    if selected_master == "Select a Master Component":
+        st.warning("Please select a Master Component.")
+    else:
+        # Logic to save the Part Component with the entered information
+        # Display success message or handle errors
+        associate_part_components(selected_master, part_name, quantity)
+        st.success(f"Part Component '{part_name}' created successfully and associated with '{selected_master}'!")
+
+# View Master Components and their associated Part Components Table
+st.header("View Master Components and Associated Part Components Table")
+
+# Display Master Components and their associated Part Components in a table
+table_data = []
+for master_component in master_components:
+    for part_component in master_component["part_components"]:
+        table_data.append({"Master Component": master_component["name"], "Part Component": part_component["name"], "Quantity": part_component["quantity"]})
+
+if table_data:
+    st.table(table_data)
+else:
+    st.info("No Part Components associated yet.")
 
 
-df1 = pd.DataFrame(data1)
 
-styled_df1 = df1.style.hide(axis="index").set_table_styles([
-    {'selector': '', 'props': [('background-color', '#BBBFC3'), ('color', 'black')]},
-        {'selector': 'th', 'props': [('background-color', '#BBBFC3'), ('color', 'black')]},
-])
-
-st.markdown(styled_df1.to_html(escape=False), unsafe_allow_html=True)
-
-# Add a horizontal rule with black color
-st.markdown("<hr style='border: 2px solid #0E1117;'>", unsafe_allow_html=True)
-
-
-data2 = {
-    'Part Description<br>(Father)': ['PICKUP FRAME', 'PICKUP FRAME', 'PICKUP FRAME'],
-    'Item Name(Children)': ['FANCANTINE-A40-ST1', 'COCLE-A-40-ST1', 'RACCOGLITORE_V6_DX-K56790'],
-    'Quantity needed per Father': ['1', '1', '1'],
-}
-
-df2 = pd.DataFrame(data2)
-
-styled_df2 = df2.style.hide(axis="index").set_table_styles([
-    {'selector': '', 'props': [('background-color', '#BBBFC3'), ('color', 'black')]},
-        {'selector': 'th', 'props': [('background-color', '#BBBFC3'), ('color', 'black')]},
-])
-
-# Convert the styled DataFrame to HTML
-html_code = styled_df2.to_html(escape=False)
-
-# Manipulate the HTML string to include the width property
-html_code = html_code.replace('<table', '<table style="width:1000px;"')
-
-st.markdown(html_code, unsafe_allow_html=True)
