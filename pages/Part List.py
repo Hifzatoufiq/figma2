@@ -13,7 +13,7 @@ st.markdown(
     <style>
         body {
             background-color: #080707;
-            color: #f4fbfb;
+            color: white;
             font-family: serif;
             primaryColor=#7b2828;
         }
