@@ -1,139 +1,60 @@
 import streamlit as st
-import pandas as pd
-
-st.set_page_config(
-  
-    page_title="Your App Title",
-    page_icon=":robot:",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
-st.markdown(
-        """
-        <style>
-            [data-testid="stSidebarNav"] {
-                background-image: url('https://res.cloudinary.com/asadullahkhan/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1705583102/RE-removebg-preview_kp4ymg.jpg?_s=public-apps');
-
-                background-repeat: no-repeat;
-                background-size: 120px;
-                padding-top: 120px;
-                background-position: 20px 20px;
-                
-            }
-               [data-testid="stSidebarNav"]::before {
-                content: "Work Orders";
-                margin-left: 20px;
-                margin-top: 20px;
-                font-size: 20px;
-                position: relative;
-                top: 100px;
-                font-weight: bold;
-            }
-             
-           
-           
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-# Function to create or get SessionState
-def get_session():
-    if "session" not in st.session_state:
-        st.session_state.session = SessionState()
-    return st.session_state.session
-
-# SessionState class for persisting session state
-class SessionState:
-    def __init__(self):
-        self.master_components = []
 
 # Sample data structure to store Master and Part Components
-session = get_session()
+master_components = []
 
 # Function to create Master Component
 def create_master_component(name):
     # Logic to save the Master Component with the entered information
-    session.master_components.append({"name": name, "part_components": []})
+    master_components.append({"name": name, "part_components": []})
 
-# Add custom CSS for styling
-st.markdown(
-    """
-    <style>
-        .st-eb {
-            max-width: 40px !important;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# Function to associate Part Components with a Master Component
+def associate_part_components(master_name, part_name, quantity):
+    # Logic to associate Part Components with the selected Master Component
+    for master_component in master_components:
+        if master_component["name"] == master_name:
+            master_component["part_components"].append({"name": part_name, "quantity": quantity})
 
 # Streamlit app
-def main():
-    # Display a subheader with blue text color
-    st.markdown("<h3 style='color:#6498C1;'>Master Part</h3>", unsafe_allow_html=True)
+st.header("Create Part Component")
 
-    # The rest of your Streamlit app goes here
+# Name input field
+part_name = st.text_input("1. Name: Enter the name of the Part Component")
+if not part_name:
+    st.warning("Please enter the name of the Part Component.")
 
-if __name__ == "__main__":
-    main()
-
-# Form to create Master Component
-master_name = st.text_input("Name: Enter the name of the Master Component", key="master_name")
-if st.button("Create Master Component"):
-    create_master_component(master_name)
-    st.success(f"Master Component '{master_name}' created successfully!")
-
-# View Master Components
-#st.header("View Master Components and Associated Part Components Table")
-
-# Display Master Components and their associated Part Components in a table
-
-st.subheader("Master Table")
-
-
-# Add custom CSS for styling
-st.markdown(
-    """
-    <style>
-        .st-eb {
-            max-width: 50px !important;
-            background-color: #BBBFC3 !important;
-            color: black !important;
-        }
-        .st-eb option {
-            background-color: #BBBFC3 !important;
-            color: black !important;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# Rest of your Streamlit app code...
+# Quantity input field
+quantity = st.number_input("2. Quantity: Specify the quantity if applicable", min_value=0)
 
 # Dropdown to select Master Component
-selected_master = st.selectbox(
-    "Select Master Component",
-    ["Select a Master Component"] + [master["name"] for master in session.master_components],
-    key="selected_master",
-    format_func=lambda x: 'Select a Master Component' if x == 'Select a Master Component' else x  # To display the placeholder text properly
-)
-# Button to open the form for associating Part Components
-if selected_master != "Select a Master Component":
-    st.subheader(f"Master Component Details: {selected_master}")
+selected_master = st.selectbox("3. Select Master Component (father)", ["Select a Master Component"] + [master["name"] for master in master_components])
 
-    # Display details of the selected Master Component in a table
-    details_table_data = []
-    for master_component in session.master_components:
-        if master_component["name"] == selected_master:
-            details_table_data.append({"Attribute": "Name", "Value": master_component["name"]})
-            details_table_data.append({"Attribute": "Associated Part Components", "Value": ", ".join(part["name"] for part in master_component["part_components"])})
+# Button to submit the form
+if st.button("Create Part Component"):
+    if selected_master == "Select a Master Component":
+        st.warning("Please select a Master Component.")
+    else:
+        try:
+            # Logic to save the Part Component with the entered information
+            associate_part_components(selected_master, part_name, quantity)
+            st.success(f"Part Component '{part_name}' created successfully and associated with '{selected_master}'!")
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
 
-    st.table(details_table_data if details_table_data else "No details available.")
+# View Master Components and their associated Part Components Table
+st.header("Master Table")
 
-    # Display existing Part Components
-    existing_part_components = [part["name"] for master_component in session.master_components if master_component["name"] == selected_master for part in master_component["part_components"]]
+# Display Master Components and their associated Part Components in a table
+table_data = []
+for master_component in master_components:
+    for part_component in master_component["part_components"]:
+        table_data.append({"Master Component": master_component["name"], "Part Component": part_component["name"], "Quantity": part_component["quantity"]})
+
+if table_data:
+    st.table(table_data)
+else:
+    st.info("No Part Components associated yet.")
+
 
 
 
