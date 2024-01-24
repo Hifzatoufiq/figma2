@@ -89,7 +89,7 @@ if st.button("Create Master Component"):
 
 # Display Master Components and their associated Part Components in a table
 
-st.subheader("View Master Component Details and Associate Part Components")
+st.subheader("Master Table")
 
 
 # Add custom CSS for styling
