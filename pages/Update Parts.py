@@ -93,22 +93,6 @@ st.subheader("Master Table")
 
 
 # Add custom CSS for styling
-st.markdown(
-    """
-    <style>
-        .st-eb {
-            max-width: 50px !important;
-            background-color: #BBBFC3 !important;
-            color: black !important;
-        }
-        .st-eb option {
-            background-color: #BBBFC3 !important;
-            color: black !important;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 # Rest of your Streamlit app code...
 
