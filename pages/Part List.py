@@ -125,7 +125,7 @@ if st.button("Create Part Component"):
         st.success(f"Part Component '{part_name}' created successfully and associated with '{selected_master}'!")
 
 # View Master Components and their associated Part Components Table
-st.header("View Master Components and Associated Part Components Table")
+st.header("Master table")
 
 # Display Master Components and their associated Part Components in a table
 table_data = []
