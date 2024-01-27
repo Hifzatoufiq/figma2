@@ -86,8 +86,7 @@ def main():
 
     # The rest of your Streamlit app goes here
 
-if __name__ == "__main__":
-    main()
+
 
 import streamlit as st
 
@@ -139,6 +138,7 @@ else:
     st.info("No Part Components associated yet.")
 #hell
 
-
+if __name__ == "__main__":
+    main()
 
 
